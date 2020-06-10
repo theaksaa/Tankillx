@@ -1778,6 +1778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223466c4472975c4ba0c1789ef7edce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bg_volume_slider: {fileID: 0}
+  sfx_volume_slider: {fileID: 0}
 --- !u!224 &1091074559
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2049,6 +2051,8 @@ MonoBehaviour:
   Pickups:
   - {fileID: 3013409832719058171, guid: 79b3f62ebb3f0e04089445cad60ae2c1, type: 3}
   PauseMenu: {fileID: 1091074557}
+  BackgroundMusicObject: {fileID: 914364725}
+  SFXMusicObject: {fileID: 233145105}
   gamePaused: 0
 --- !u!4 &1329555289
 Transform:

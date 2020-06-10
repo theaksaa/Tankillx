@@ -30,6 +30,9 @@ public class ScriptGameManager : MonoBehaviour
 
     public GameObject PauseMenu;
 
+    public GameObject BackgroundMusicObject;
+    public GameObject SFXMusicObject;
+
     private int count = 0;
     private int pickupTimer = -1;
     private int pickupTimerCount = -1;
@@ -45,7 +48,7 @@ public class ScriptGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Load();
     }
 
     void Update()
@@ -175,5 +178,43 @@ public class ScriptGameManager : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void Load()
+    {
+        if (System.IO.File.Exists(System.IO.Path.Combine(Application.dataPath, "options.txt")))
+        {
+            string[] options = System.IO.File.ReadAllText(System.IO.Path.Combine(Application.dataPath, "options.txt")).Split('|');
+            float bg_volume = 0f, sfx_volume = 0f;
+            try
+            {
+                if (float.TryParse(options[0], out bg_volume) && float.TryParse(options[1], out sfx_volume))
+                {
+                    BackgroundMusicObject.GetComponent<AudioSource>().volume = bg_volume;
+                    SFXMusicObject.GetComponent<AudioSource>().volume = sfx_volume;
+                }
+                else
+                {
+                    Save(0.5f, 0.5f);
+                    Load();
+                    return;
+                }
+            }
+            catch (System.Exception e)
+            {
+                Save(0.5f, 0.5f);
+                Load();
+                return;
+            }
+        }
+        else Save(0.5f, 0.5f);
+
+        Debug.Log("Succesfully loaded!");
+    }
+
+    public void Save(float bg_volume, float sfx_volume)
+    {
+        System.IO.File.WriteAllText(System.IO.Path.Combine(Application.dataPath, "options.txt"), bg_volume.ToString() + '|' + sfx_volume.ToString());
+        Debug.Log("Options saved!");
     }
 }
